@@ -1,193 +1,118 @@
-Welcome to your new TanStack Start app! 
+# sailingnaturali.com
 
-# Getting Started
+The apex marketing site for [Sailing Naturali](https://sailingnaturali.com) — an all-electric expedition charter being built in the open in the Pacific Northwest.
 
-To run this application:
+Built with **[TanStack Start](https://tanstack.com/start)** (React + Vite), **prerendered to static HTML**, deployed on **Vercel**. No CMS: content lives in the repo and ships via PR → Vercel preview → merge.
 
-```bash
-pnpm install
-pnpm dev
+This repo also carries a small, copyable **SEO + GEO module** for TanStack Start. If you found your way here looking for "how do I do SEO / answer-engine visibility on TanStack Start," the [SEO/GEO pattern](#the-seogeo-pattern) section is for you.
+
+---
+
+## The SEO/GEO pattern
+
+**SEO** = ranking in classic search (Googlebot, Bingbot). **GEO** (Generative Engine Optimization) = getting *cited* by AI answer engines (GPTBot, PerplexityBot, ClaudeBot, Google AI Overviews).
+
+They share one spine: **a bot that receives clean, prerendered HTML with good structured data wins both.** TanStack Start client-renders by default, which is exactly the thing both SEO and GEO need fixed — so the single highest-leverage move is prerendering every public route to static HTML. Everything else (meta, JSON-LD, sitemap, `llms.txt`) layers on top of that.
+
+### 1. Prerender to static HTML (the load-bearing decision)
+
+In `vite.config.ts`, enable prerendering on the `tanstackStart()` plugin and add `nitro()` for the Vercel build target:
+
+```ts
+tanstackStart({
+  prerender: {
+    enabled: true,
+    autoSubfolderIndex: true,
+    autoStaticPathsDiscovery: true,
+    crawlLinks: true,
+    concurrency: 14,
+  },
+}),
+nitro(),
 ```
 
-# Building For Production
-
-To build this application for production:
+Verify it worked by inspecting the built HTML — the page text must be in the file, not just an empty `<div id="root">`:
 
 ```bash
 pnpm build
+grep -a 'your hero text' .output/public/index.html   # must match
 ```
 
-## Testing
+> Note: Nitro emits `index.html` as a single UTF-8 line; macOS/BSD `grep` treats it as binary, so use `grep -a`.
 
-This project uses [Vitest](https://vitest.dev/) for testing. You can run the tests with:
+### 2. Single source of truth — `src/lib/site.ts`
 
-```bash
-pnpm test
+One file defines the site and the page registry. Everything downstream (meta, JSON-LD, sitemap, `llms.txt`) reads from it, so adding a page is a one-line change:
+
+```ts
+export const siteConfig = { url, name, title, description, ... } as const
+export interface PageDef { path; title; description; lastmod }
+export const pages: PageDef[] = [ { path: '/', title, description, lastmod } ]
 ```
 
-## Styling
+### 3. Per-route `<head>` + JSON-LD — `src/lib/seo.ts`
 
-This project uses [Tailwind CSS](https://tailwindcss.com/) for styling.
-
-### Removing Tailwind CSS
-
-If you prefer not to use Tailwind CSS:
-
-1. Remove the demo pages in `src/routes/demo/`
-2. Replace the Tailwind import in `src/styles.css` with your own styles
-3. Remove `tailwindcss()` from the plugins array in `vite.config.ts`
-4. Uninstall the packages: `pnpm add @tailwindcss/vite tailwindcss --dev`
-
-
-
-## Routing
-
-This project uses [TanStack Router](https://tanstack.com/router) with file-based routing. Routes are managed as files in `src/routes`.
-
-### Adding A Route
-
-To add a new route to your application just add a new file in the `./src/routes` directory.
-
-TanStack will automatically generate the content of the route file for you.
-
-Now that you have two routes you can use a `Link` component to navigate between them.
-
-### Adding Links
-
-To use SPA (Single Page Application) navigation you will need to import the `Link` component from `@tanstack/react-router`.
+`pageHead(page)` returns a TanStack Router `head` object (title, description, canonical, Open Graph, Twitter). `organizationJsonLd()` / `websiteJsonLd()` return [schema.org](https://schema.org) objects. A route wires them in:
 
 ```tsx
-import { Link } from "@tanstack/react-router";
-```
-
-Then anywhere in your JSX you can use it like so:
-
-```tsx
-<Link to="/about">About</Link>
-```
-
-This will create a link that will navigate to the `/about` route.
-
-More information on the `Link` component can be found in the [Link documentation](https://tanstack.com/router/v1/docs/framework/react/api/router/linkComponent).
-
-### Using A Layout
-
-In the File Based Routing setup the layout is located in `src/routes/__root.tsx`. Anything you add to the root route will appear in all the routes. The route content will appear in the JSX where you render `{children}` in the `shellComponent`.
-
-Here is an example layout that includes a header:
-
-```tsx
-import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
-
-export const Route = createRootRoute({
+export const Route = createFileRoute('/')({
   head: () => ({
-    meta: [
-      { charSet: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { title: 'My App' },
+    ...pageHead(home),
+    scripts: [
+      { type: 'application/ld+json', children: JSON.stringify(organizationJsonLd()) },
+      { type: 'application/ld+json', children: JSON.stringify(websiteJsonLd()) },
     ],
   }),
-  shellComponent: ({ children }) => (
-    <html lang="en">
-      <head>
-        <HeadContent />
-      </head>
-      <body>
-        <header>
-          <nav>
-            <Link to="/">Home</Link>
-            <Link to="/about">About</Link>
-          </nav>
-        </header>
-        {children}
-        <Scripts />
-      </body>
-    </html>
-  ),
+  component: Home,
 })
 ```
 
-More information on layouts can be found in the [Layouts documentation](https://tanstack.com/router/latest/docs/framework/react/guide/routing-concepts#layouts).
+Finding worth knowing: TanStack Start's route `head.scripts` **does** emit inline `application/ld+json` into the prerendered `<head>` — no need to render the script tag in the component body. (If a future version regresses, the fallback is a `<script type="application/ld+json" dangerouslySetInnerHTML={...} />` directly in the component JSX.)
 
-## Server Functions
+### 4. Generated `sitemap.xml`, `robots.txt`, `llms.txt`
 
-TanStack Start provides server functions that allow you to write server-side code that seamlessly integrates with your client components.
+`src/lib/seo-assets.ts` holds three pure string builders (`buildSitemap`, `buildRobots`, `buildLlmsTxt`). `scripts/generate-seo-assets.mjs` reads `site.ts` and writes the three files into `public/` at build time, so they stay in lockstep with the page registry. The build runs the generator first:
 
-```tsx
-import { createServerFn } from '@tanstack/react-start'
-
-const getServerTime = createServerFn({
-  method: 'GET',
-}).handler(async () => {
-  return new Date().toISOString()
-})
-
-// Use in a component
-function MyComponent() {
-  const [time, setTime] = useState('')
-  
-  useEffect(() => {
-    getServerTime().then(setTime)
-  }, [])
-  
-  return <div>Server time: {time}</div>
-}
+```jsonc
+"build": "tsx scripts/generate-seo-assets.mjs && vite build"
 ```
 
-## API Routes
+**`llms.txt` is the GEO-specific lever** — a plain-Markdown map of the site (see [llmstxt.org](https://llmstxt.org)) that answer engines can read without executing JS or parsing your layout. It's cheap to emit and it's the most direct "make this site legible to LLMs" move available today.
 
-You can create API routes by using the `server` property in your route definitions:
+### Copy it into your own site
 
-```tsx
-import { createFileRoute } from '@tanstack/react-router'
-import { json } from '@tanstack/react-start'
+Lift these four files and the build wiring:
 
-export const Route = createFileRoute('/api/hello')({
-  server: {
-    handlers: {
-      GET: () => json({ message: 'Hello, World!' }),
-    },
-  },
-})
+```
+src/lib/site.ts            # edit: your site + pages
+src/lib/seo.ts             # per-route head + JSON-LD helpers
+src/lib/seo-assets.ts      # sitemap / robots / llms.txt builders (pure, unit-tested)
+scripts/generate-seo-assets.mjs
 ```
 
-## Data Fetching
+Then enable `prerender` + `nitro()` in `vite.config.ts` (step 1) and set the `build` script (step 4). The builders in `seo-assets.ts` are framework-agnostic pure functions; `seo.ts`'s return shape is TanStack-Router-specific but trivial to adapt.
 
-There are multiple ways to fetch data in your application. You can use TanStack Query to fetch data from a server. But you can also use the `loader` functionality built into TanStack Router to load the data for a route before it's rendered.
+---
 
-For example:
+## Develop
 
-```tsx
-import { createFileRoute } from '@tanstack/react-router'
-
-export const Route = createFileRoute('/people')({
-  loader: async () => {
-    const response = await fetch('https://swapi.dev/api/people')
-    return response.json()
-  },
-  component: PeopleComponent,
-})
-
-function PeopleComponent() {
-  const data = Route.useLoaderData()
-  return (
-    <ul>
-      {data.results.map((person) => (
-        <li key={person.name}>{person.name}</li>
-      ))}
-    </ul>
-  )
-}
+```bash
+pnpm install
+pnpm dev        # http://localhost:3000
+pnpm test       # vitest — unit tests for the SEO/GEO builders
+pnpm build      # generates SEO assets, then prerenders to .output/public/
 ```
 
-Loaders simplify your data fetching logic dramatically. Check out more information in the [Loader documentation](https://tanstack.com/router/latest/docs/framework/react/guide/data-loading#loader-parameters).
+Tests run under `vitest.config.ts` (Node environment, isolated from the app's Vite plugin stack so pure-function tests don't drag in `tanstackStart`/`nitro`/React).
 
-# Demo files
+## Deploy
 
-Files prefixed with `demo` can be safely deleted. They are there to provide a starting point for you to play around with the features you've installed.
+Vercel auto-detects TanStack Start. Build command `pnpm build`; Nitro auto-targets Vercel in CI. DNS lives on Cloudflare (DNS-only / grey-cloud, so Vercel provisions its own TLS cert).
 
-# Learn More
+## Editing content
 
-You can learn more about all of the offerings from TanStack in the [TanStack documentation](https://tanstack.com).
+No dashboard. Change copy in `src/routes/*` or `src/lib/site.ts`, open a PR, review the Vercel preview deploy, merge. To add a page: create the route and add a row to `pages` in `site.ts` — the sitemap and `llms.txt` follow automatically.
 
-For TanStack Start specific documentation, visit [TanStack Start](https://tanstack.com/start).
+## License
+
+MIT.
