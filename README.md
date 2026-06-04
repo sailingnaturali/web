@@ -98,7 +98,7 @@ Then enable `prerender` + `nitro()` in `vite.config.ts` (step 1) and set the `bu
 
 ```bash
 pnpm install
-pnpm dev        # http://localhost:3000
+pnpm dev        # http://localhost:5173  (3000 is reserved for SignalK)
 pnpm test       # vitest — unit tests for the SEO/GEO builders
 pnpm build      # generates SEO assets, then prerenders to .output/public/
 ```
