@@ -5,6 +5,7 @@ export const siteConfig = {
   description:
     "A tech exec is using AI leverage to build a premium all-electric sailing charter in the Pacific Northwest — the kind of business AI can't deliver. Follow the build.",
   tagline: "Using AI to build the kind of business AI can't deliver.",
+  // Keep in sync with the canonical list: sailingnaturali/.github → socials.json
   substack: 'https://sailingnaturali.substack.com',
   youtube: 'https://www.youtube.com/@sailingnaturali',
   instagram: 'https://www.instagram.com/sailingnaturali',
