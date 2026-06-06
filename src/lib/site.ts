@@ -7,6 +7,8 @@ export const siteConfig = {
   tagline: "Using AI to build the kind of business AI can't deliver.",
   substack: 'https://sailingnaturali.substack.com',
   youtube: 'https://www.youtube.com/@sailingnaturali',
+  instagram: 'https://www.instagram.com/sailingnaturali',
+  tiktok: 'https://www.tiktok.com/@sailingnaturali',
 } as const
 
 export interface PageDef {

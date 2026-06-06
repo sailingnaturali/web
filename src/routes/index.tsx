@@ -270,6 +270,12 @@ function Home() {
             <a href={siteConfig.youtube} className="hover:text-sn-leaf">
               YouTube
             </a>
+            <a href={siteConfig.instagram} className="hover:text-sn-leaf">
+              Instagram
+            </a>
+            <a href={siteConfig.tiktok} className="hover:text-sn-leaf">
+              TikTok
+            </a>
             <a href={siteConfig.substack} className="hover:text-sn-leaf">
               Substack
             </a>

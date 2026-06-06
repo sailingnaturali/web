@@ -9,7 +9,7 @@ export function organizationJsonLd() {
     '@type': 'Organization',
     name: siteConfig.name,
     url: siteConfig.url,
-    sameAs: [siteConfig.substack, siteConfig.youtube],
+    sameAs: [siteConfig.substack, siteConfig.youtube, siteConfig.instagram, siteConfig.tiktok],
   }
 }
 
