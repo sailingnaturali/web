@@ -12,5 +12,6 @@ describe('itineraryListJsonLd', () => {
     expect(first.position).toBe(1)
     expect(first.item.name).toBe(itineraries[0].name)
     expect(first.item.description).toBe(itineraries[0].tagline)
+    ld.itemListElement.forEach((el, i) => expect(el.position).toBe(i + 1))
   })
 })
