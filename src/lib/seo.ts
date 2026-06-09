@@ -1,4 +1,5 @@
 import { siteConfig, type PageDef } from './site'
+import { itineraries } from './itineraries'
 
 const canonicalFor = (path: string) =>
   path === '/' ? `${siteConfig.url}/` : `${siteConfig.url}${path}`
@@ -38,5 +39,23 @@ export function pageHead(page: PageDef) {
       { name: 'twitter:description', content: page.description },
     ],
     links: [{ rel: 'canonical', href: canonical }],
+  }
+}
+
+export function itineraryListJsonLd() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Sailing Naturali — planned charter itineraries',
+    itemListElement: itineraries.map((it, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      item: {
+        '@type': 'TouristTrip',
+        name: it.name,
+        description: it.tagline,
+        touristType: it.routeType.label,
+      },
+    })),
   }
 }
