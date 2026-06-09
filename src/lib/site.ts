@@ -28,4 +28,11 @@ export const pages: PageDef[] = [
     description: siteConfig.description,
     lastmod: '2026-06-01',
   },
+  {
+    path: '/itineraries',
+    title: 'Itineraries — Sailing Naturali',
+    description:
+      "The charter trips we’re planning aboard an all-electric catamaran in the Pacific Northwest — a Gulf Islands loop, a Desolation Sound expedition, a Sunshine Coast passage, and the far-north Broughtons. In development.",
+    lastmod: '2026-06-09',
+  },
 ]
