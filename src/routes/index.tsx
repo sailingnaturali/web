@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { pageHead, organizationJsonLd, websiteJsonLd } from '../lib/seo'
 import { siteConfig, pages } from '../lib/site'
+import { SiteFooter } from '../components/SiteFooter'
 
 const home = pages.find((p) => p.path === '/')!
 
@@ -260,32 +261,7 @@ function Home() {
         </div>
       </section>
 
-      {/* ── Footer ───────────────────────────────────────────── */}
-      <footer className="bg-sn-navy-deep">
-        <div className="mx-auto flex max-w-6xl flex-col gap-4 px-6 py-10 md:flex-row md:items-center md:justify-between md:px-10">
-          <nav
-            aria-label="Footer"
-            className="flex flex-wrap gap-x-6 gap-y-2 font-mono text-xs uppercase tracking-[0.18em] text-sn-sky/70"
-          >
-            <a href={siteConfig.youtube} className="hover:text-sn-leaf">
-              YouTube
-            </a>
-            <a href={siteConfig.substack} className="hover:text-sn-leaf">
-              Substack
-            </a>
-            <a href={siteConfig.instagram} className="hover:text-sn-leaf">
-              Instagram
-            </a>
-            <a href={siteConfig.tiktok} className="hover:text-sn-leaf">
-              TikTok
-            </a>
-            <span className="text-sn-sky/40">Charters (Year 5)</span>
-          </nav>
-          <p className="font-mono text-xs tracking-[0.1em] text-sn-sky/40">
-            © Sailing Naturali — built in the Pacific Northwest.
-          </p>
-        </div>
-      </footer>
+      <SiteFooter />
     </main>
   )
 }

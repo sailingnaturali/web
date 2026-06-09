@@ -164,6 +164,13 @@ body,
   animation: sn-pop 0.5s ease forwards;
 }
 
+/* Route line on the itinerary maps — draws itself in like the hero net */
+.sn-route {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: sn-draw 1.6s cubic-bezier(0.2, 0.7, 0.2, 1) 0.3s forwards;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   .sn-rise,
