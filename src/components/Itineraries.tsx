@@ -1,6 +1,7 @@
 import { Anchor, Plane, Sailboat, Compass, type LucideIcon } from 'lucide-react'
 import { itineraries, type Itinerary } from '../lib/itineraries'
 import { siteConfig } from '../lib/site'
+import { RouteMap } from './RouteMap'
 import { SiteFooter } from './SiteFooter'
 
 const routeIcon: Record<string, LucideIcon> = {
@@ -18,12 +19,23 @@ function TripCard({ trip }: { trip: Itinerary }) {
         trip.featured ? 'md:col-span-2' : ''
       }`}
     >
-      <div className="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.18em] text-sn-green">
-        <Icon className="h-4 w-4" aria-hidden="true" />
-        {trip.routeType.label}
+      <div className="flex grow flex-col gap-8 sm:flex-row sm:justify-between">
+        <div>
+          <div className="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.18em] text-sn-green">
+            <Icon className="h-4 w-4" aria-hidden="true" />
+            {trip.routeType.label}
+          </div>
+          <h3 className="mt-5 text-2xl text-sn-navy md:text-3xl">{trip.name}</h3>
+          <p className="mt-3 max-w-xl text-base leading-relaxed text-sn-navy/70">{trip.tagline}</p>
+        </div>
+        <RouteMap
+          routeId={trip.id}
+          label={`Route map — ${trip.region}`}
+          className={`w-auto shrink-0 self-start rounded-lg border border-sn-cloud bg-sn-sky/15 ${
+            trip.featured ? 'h-44 sm:h-48' : 'h-40'
+          }`}
+        />
       </div>
-      <h3 className="mt-5 text-2xl text-sn-navy md:text-3xl">{trip.name}</h3>
-      <p className="mt-3 max-w-xl text-base leading-relaxed text-sn-navy/70">{trip.tagline}</p>
       <dl className="mt-6 grid grid-cols-[auto_1fr] gap-x-6 gap-y-1.5 border-t border-sn-cloud pt-5 font-mono text-xs uppercase tracking-[0.12em]">
         <dt className="text-sn-green-mid">Length</dt>
         <dd className="text-sn-navy">{trip.lengthLabel}</dd>

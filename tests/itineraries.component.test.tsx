@@ -21,4 +21,11 @@ describe('Itineraries page', () => {
       expect(screen.getAllByText(t.routeType.label).length).toBeGreaterThan(0)
     }
   })
+
+  it('draws a route map on every card', () => {
+    render(<Itineraries />)
+    for (const t of itineraries) {
+      expect(screen.getByRole('img', { name: `Route map — ${t.region}` })).toBeTruthy()
+    }
+  })
 })
