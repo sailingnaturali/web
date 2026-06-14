@@ -1,9 +1,9 @@
 export const siteConfig = {
   url: 'https://sailingnaturali.com',
   name: 'Sailing Naturali',
-  title: 'Sailing Naturali — an all-electric charter, built with AI',
+  title: "Sailing Naturali — a tech exec's leap to an all-electric charter",
   description:
-    "A tech exec is using AI leverage to build a premium all-electric sailing charter in the Pacific Northwest — the kind of business AI can't deliver. Follow the build.",
+    "A tech executive is upending their life to build a premium all-electric sailing charter in the Pacific Northwest — still at the desk, pointed at the sea, documenting the leap. AI clears the path; presence is the point.",
   tagline: "Using AI to build the kind of business AI can't deliver.",
   // Keep in sync (incl. order) with the canonical list: sailingnaturali/.github → socials.json
   // Importance order: youtube, substack, website — then instagram, tiktok.
@@ -26,7 +26,7 @@ export const pages: PageDef[] = [
     path: '/',
     title: siteConfig.title,
     description: siteConfig.description,
-    lastmod: '2026-06-01',
+    lastmod: '2026-06-14',
   },
   {
     path: '/itineraries',

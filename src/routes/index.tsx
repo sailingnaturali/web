@@ -109,18 +109,18 @@ function Constellation() {
 const bets = [
   {
     n: '01',
+    title: 'Presence is the product.',
+    body: 'A bet that craft and hospitality are the economy that survives AGI.',
+  },
+  {
+    n: '02',
     title: 'Built, not bought.',
     body: 'The plan, the P&L, the licensing exams, the debt-service stress tests. The receipts are the moat.',
   },
   {
-    n: '02',
+    n: '03',
     title: 'Tech as means, not enemy.',
     body: 'AI does the operations; humans deliver the experience.',
-  },
-  {
-    n: '03',
-    title: 'Presence is the product.',
-    body: 'A bet that craft and hospitality are the economy that survives AGI.',
   },
 ]
 
@@ -150,16 +150,17 @@ function Home() {
               className="sn-rise mt-5 text-balance text-4xl text-sn-paper sm:text-5xl md:text-7xl"
               style={{ animationDelay: '0.22s' }}
             >
-              Using AI to build the kind of business{' '}
-              <em className="italic text-sn-leaf">AI can&apos;t deliver.</em>
+              Building a life at sea.{' '}
+              <em className="italic text-sn-leaf">Still in tech.</em>
             </h1>
             <p
               className="sn-rise mt-6 max-w-xl text-lg leading-relaxed text-sn-sky"
               style={{ animationDelay: '0.34s' }}
             >
-              An all-electric expedition catamaran. A Pacific Northwest charter, built
-              in the open — with the receipts. AI runs the operations; humans deliver
-              the experience.
+              A tech executive is dismantling one life and assembling another aboard a
+              49-foot all-electric catamaran — a Pacific Northwest charter, documented
+              decision by decision. AI clears the path; presence, craft, and judgment
+              are the point.
             </p>
             <div
               className="sn-rise mt-9 flex flex-wrap items-center gap-x-7 gap-y-3"
@@ -169,7 +170,7 @@ function Home() {
                 href={siteConfig.substack}
                 className="group inline-flex items-center gap-2 rounded-full bg-sn-green px-6 py-3 text-sm font-medium text-sn-paper transition-colors hover:bg-sn-green-mid"
               >
-                Follow the build
+                Follow the leap
                 <span className="transition-transform group-hover:translate-x-1">→</span>
               </a>
               <a
@@ -196,14 +197,19 @@ function Home() {
         </div>
         <div className="md:col-span-8">
           <p className="font-display text-2xl leading-snug text-sn-navy md:text-[2rem]">
-            I&apos;m a tech executive building a premium eco-charter operation in the Gulf
-            and San Juan Islands — aboard a 49-foot all-electric aluminium catamaran.
+            I&apos;m a tech executive evolving into a new life: a premium eco-charter in
+            the Gulf and San Juan Islands, aboard a 49-foot all-electric aluminium
+            catamaran.
           </p>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-sn-navy/75">
-            I&apos;m not leaving tech. I&apos;m using AI leverage to fund and run a business
-            that needs presence, craft, and judgment: the things AI still can&apos;t do.
-            This is the build, documented as it happens — the licensing, the financing,
-            the boat, the systems, the math. Built, not bought.
+            Not an escape hatch — a deliberate, documented changeover. I&apos;m still at
+            the desk, using the leverage this moment makes possible to fund the leap, and
+            pointing everything at the day the dock lines come off for good. What&apos;s
+            left is the work AI can&apos;t touch: presence, craft, judgment, a boat full
+            of people having the trip of their lives.
+          </p>
+          <p className="mt-8 max-w-2xl text-base italic leading-relaxed text-sn-navy/55">
+            &ldquo;Using AI to build the kind of business AI can&apos;t deliver.&rdquo;
           </p>
         </div>
       </section>
@@ -245,10 +251,10 @@ function Home() {
             aria-hidden="true"
           />
           <div className="relative max-w-xl">
-            <h2 className="text-3xl text-sn-paper md:text-4xl">Get the build notes.</h2>
+            <h2 className="text-3xl text-sn-paper md:text-4xl">Follow the leap.</h2>
             <p className="mt-4 text-lg leading-relaxed text-sn-sky">
-              Roughly twice a month — the decisions, the numbers, what worked and what
-              didn&apos;t.
+              Roughly twice a month — the decisions, the doubts, the numbers, what worked
+              and what didn&apos;t.
             </p>
             <a
               href={siteConfig.substack}
