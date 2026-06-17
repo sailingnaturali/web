@@ -198,7 +198,7 @@ function Home() {
         <div className="md:col-span-8">
           <p className="font-display text-2xl leading-snug text-sn-navy md:text-[2rem]">
             I&apos;m a tech executive evolving into a new life: a premium eco-charter in
-            the Gulf and San Juan Islands, aboard a 49-foot all-electric aluminium
+            the Gulf and San Juan Islands, aboard a 49-foot all-electric
             catamaran.
           </p>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-sn-navy/75">
