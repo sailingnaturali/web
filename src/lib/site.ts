@@ -5,6 +5,10 @@ export const siteConfig = {
   description:
     "A tech executive is upending their life to build a premium all-electric sailing charter in the Pacific Northwest — still at the desk, pointed at the sea, documenting the leap. AI clears the path; presence is the point.",
   tagline: "Using AI to build the kind of business AI can't deliver.",
+  // Social share image, site-relative; resolved to an absolute URL in seo.ts.
+  // TODO: swap for a dedicated 1200×630 OG image — logo512.png is square, so it
+  // center-crops in summary_large_image cards. Just change this path when ready.
+  ogImage: '/logo512.png',
   // Keep in sync (incl. order) with the canonical list: sailingnaturali/.github → socials.json
   // Importance order: youtube, substack, website — then instagram, tiktok.
   youtube: 'https://www.youtube.com/@sailingnaturali',

@@ -25,6 +25,7 @@ export function websiteJsonLd() {
 
 export function pageHead(page: PageDef) {
   const canonical = canonicalFor(page.path)
+  const image = `${siteConfig.url}${siteConfig.ogImage}` // OG/Twitter need absolute URLs
   return {
     meta: [
       { title: page.title },
@@ -34,9 +35,13 @@ export function pageHead(page: PageDef) {
       { property: 'og:description', content: page.description },
       { property: 'og:url', content: canonical },
       { property: 'og:site_name', content: siteConfig.name },
+      { property: 'og:image', content: image },
+      { property: 'og:image:alt', content: siteConfig.name },
       { name: 'twitter:card', content: 'summary_large_image' },
       { name: 'twitter:title', content: page.title },
       { name: 'twitter:description', content: page.description },
+      { name: 'twitter:image', content: image },
+      { name: 'twitter:image:alt', content: siteConfig.name },
     ],
     links: [{ rel: 'canonical', href: canonical }],
   }

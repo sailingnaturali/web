@@ -18,6 +18,18 @@ describe('pageHead', () => {
       'summary_large_image',
     )
   })
+
+  it('sets absolute og:image and twitter:image so link previews render', () => {
+    const head = pageHead(home)
+    const expected = `${siteConfig.url}${siteConfig.ogImage}`
+    const ogImage = head.meta.find((m: any) => m.property === 'og:image')?.content
+    const twImage = head.meta.find((m: any) => m.name === 'twitter:image')?.content
+    expect(ogImage).toBe(expected)
+    expect(twImage).toBe(expected)
+    // OG/Twitter require fully-qualified URLs
+    expect(ogImage?.startsWith('https://')).toBe(true)
+    expect(twImage?.startsWith('https://')).toBe(true)
+  })
 })
 
 describe('json-ld', () => {
