@@ -1,0 +1,15 @@
+{
+  "projectId": "f5d6de3f-be26-471e-af8f-c24703ea5cbb",
+  "shape": "package",
+  "pkg": "web",
+  "globalName": "SailingNaturali",
+  "entry": ".design-sync/ds-entry.ts",
+  "componentSrcMap": {
+    "Itineraries": "src/components/Itineraries.tsx",
+    "RouteMap": "src/components/RouteMap.tsx",
+    "SiteFooter": "src/components/SiteFooter.tsx"
+  },
+  "cssEntry": ".design-sync/.cache/ds.css",
+  "readmeHeader": ".design-sync/conventions.md",
+  "buildCmd": "pnpm dlx @tailwindcss/cli@4 -i src/styles.css -o .design-sync/.cache/tw.css && cat .design-sync/fonts.css .design-sync/.cache/tw.css > .design-sync/.cache/ds.css"
+}
