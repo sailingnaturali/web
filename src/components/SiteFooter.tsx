@@ -23,6 +23,9 @@ export function SiteFooter() {
           <a href={siteConfig.tiktok} className="hover:text-sn-leaf">
             TikTok
           </a>
+          <a href={siteConfig.engineering} className="hover:text-sn-leaf">
+            Engineering
+          </a>
         </nav>
         <p className="font-mono text-xs tracking-[0.1em] text-sn-sky/40">
           © Sailing Naturali — built in the Pacific Northwest.

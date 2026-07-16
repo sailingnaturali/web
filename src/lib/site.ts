@@ -14,6 +14,9 @@ export const siteConfig = {
   substack: 'https://sailingnaturali.substack.com',
   instagram: 'https://www.instagram.com/sailingnaturali',
   tiktok: 'https://www.tiktok.com/@sailingnaturali',
+  // Engineering blog — a followed link from the apex domain, passing crawl
+  // authority to the subdomain (not a "social", so not in socials.json).
+  engineering: 'https://engineering.sailingnaturali.com',
 } as const
 
 export interface PageDef {
