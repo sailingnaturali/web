@@ -1,0 +1,48 @@
+# Build and deploy the prerendered site to GitHub Pages.
+#
+# Replaced Vercel (2026-07-21). Nothing here is server-rendered — TanStack Start
+# prerenders every route to static HTML at build time (see vite.config.ts), so
+# .output/public is the whole site and .output/server is unused. Vercel was
+# serving static files for money.
+name: Deploy site to Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deploy at a time; never cancel an in-flight publish.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      # Pages serves 404.html for any unknown path. Copying the app shell there
+      # keeps Vercel's behaviour of booting the router instead of a GitHub 404.
+      - run: cp .output/public/index.html .output/public/404.html
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: .output/public
+      - id: deploy
+        uses: actions/deploy-pages@v4

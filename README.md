@@ -2,7 +2,7 @@
 
 The apex marketing site for [Sailing Naturali](https://sailingnaturali.com) — an all-electric expedition charter being built in the open in the Pacific Northwest.
 
-Built with **[TanStack Start](https://tanstack.com/start)** (React + Vite), **prerendered to static HTML**, deployed on **Vercel**. No CMS: content lives in the repo and ships via PR → Vercel preview → merge.
+Built with **[TanStack Start](https://tanstack.com/start)** (React + Vite), **prerendered to static HTML**, deployed on **GitHub Pages**. No CMS: content lives in the repo and ships via PR → merge → Pages.
 
 This repo also carries a small, copyable **SEO + GEO module** for TanStack Start. If you found your way here looking for "how do I do SEO / answer-engine visibility on TanStack Start," the [SEO/GEO pattern](#the-seogeo-pattern) section is for you.
 
@@ -16,7 +16,7 @@ They share one spine: **a bot that receives clean, prerendered HTML with good st
 
 ### 1. Prerender to static HTML (the load-bearing decision)
 
-In `vite.config.ts`, enable prerendering on the `tanstackStart()` plugin and add `nitro()` for the Vercel build target:
+In `vite.config.ts`, enable prerendering on the `tanstackStart()` plugin and add `nitro()` for the build target:
 
 ```ts
 tanstackStart({
@@ -107,11 +107,15 @@ Tests run under `vitest.config.ts` (Node environment, isolated from the app's Vi
 
 ## Deploy
 
-Vercel auto-detects TanStack Start. Build command `pnpm build`; Nitro auto-targets Vercel in CI. DNS lives on Cloudflare (DNS-only / grey-cloud, so Vercel provisions its own TLS cert).
+GitHub Pages, built by `.github/workflows/deploy.yml` on push to `main`. Every route is prerendered, so `.output/public` is the entire site — `.output/server` is never deployed. The workflow copies `index.html` to `404.html` so unknown paths boot the router.
+
+`public/CNAME` holds the custom domain. DNS lives on Cloudflare and must stay **DNS-only / grey-cloud**, or Pages can't provision its TLS cert.
+
+No preview deploys — run `pnpm dev` locally to review a change before merging.
 
 ## Editing content
 
-No dashboard. Change copy in `src/routes/*` or `src/lib/site.ts`, open a PR, review the Vercel preview deploy, merge. To add a page: create the route and add a row to `pages` in `site.ts` — the sitemap and `llms.txt` follow automatically.
+No dashboard. Change copy in `src/routes/*` or `src/lib/site.ts`, review locally with `pnpm dev`, open a PR, merge. To add a page: create the route and add a row to `pages` in `site.ts` — the sitemap and `llms.txt` follow automatically.
 
 ## License
 
