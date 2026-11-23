@@ -1,8 +1,11 @@
 import { Anchor, Plane, Sailboat, Compass, type LucideIcon } from 'lucide-react'
 import { itineraries, type Itinerary } from '../lib/itineraries'
-import { siteConfig } from '../lib/site'
+import { siteConfig, slackwaterUrl, victoriaStations } from '../lib/site'
 import { RouteMap } from './RouteMap'
 import { SiteFooter } from './SiteFooter'
+
+const inlineLink =
+  'text-sn-green underline decoration-sn-green/40 underline-offset-4 hover:decoration-sn-green'
 
 const routeIcon: Record<string, LucideIcon> = {
   Backyard: Anchor,
@@ -76,6 +79,44 @@ export function Itineraries() {
           {itineraries.map((trip) => (
             <TripCard key={trip.id} trip={trip} />
           ))}
+        </div>
+      </section>
+
+      {/* Tides & currents — Slackwater links */}
+      <section
+        aria-label="Tides and currents"
+        className="mx-auto grid max-w-6xl gap-x-12 gap-y-6 px-6 pb-24 md:grid-cols-12 md:px-10"
+      >
+        <div className="md:col-span-4">
+          <p className="font-mono text-xs uppercase tracking-[0.22em] text-sn-green">
+            Tides &amp; currents
+          </p>
+          <hr className="sn-rule mt-5" />
+        </div>
+        <div className="md:col-span-8">
+          <p className="text-lg leading-relaxed text-sn-navy/75">
+            Every one of these routes is timed to the water: slack at the passes, a rising tide
+            into a shallow anchorage. We plan them with{' '}
+            <a href={slackwaterUrl('/', 'itineraries')} className={inlineLink}>
+              Slackwater
+            </a>
+            , our offline tide and current app for iPhone. From home in Victoria, check the{' '}
+            <a href={slackwaterUrl(victoriaStations.victoriaTides, 'itineraries')} className={inlineLink}>
+              Victoria Harbour tide times
+            </a>
+            , the{' '}
+            <a href={slackwaterUrl(victoriaStations.oakBayTides, 'itineraries')} className={inlineLink}>
+              Oak Bay tide chart
+            </a>
+            , and{' '}
+            <a
+              href={slackwaterUrl(victoriaStations.trialIslandCurrents, 'itineraries')}
+              className={inlineLink}
+            >
+              currents off Trial Island
+            </a>
+            .
+          </p>
         </div>
       </section>
 

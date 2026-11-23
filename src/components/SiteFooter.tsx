@@ -1,4 +1,4 @@
-import { siteConfig } from '../lib/site'
+import { siteConfig, slackwaterUrl, victoriaStations } from '../lib/site'
 
 export function SiteFooter() {
   return (
@@ -25,6 +25,15 @@ export function SiteFooter() {
           </a>
           <a href={siteConfig.engineering} className="hover:text-sn-leaf">
             Engineering
+          </a>
+          <a href={slackwaterUrl('/', 'footer')} className="hover:text-sn-leaf">
+            Slackwater
+          </a>
+          <a
+            href={slackwaterUrl(victoriaStations.victoriaTides, 'footer')}
+            className="hover:text-sn-leaf"
+          >
+            Victoria Tides
           </a>
         </nav>
         <p className="font-mono text-xs tracking-[0.1em] text-sn-sky/40">

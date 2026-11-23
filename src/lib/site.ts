@@ -17,6 +17,29 @@ export const siteConfig = {
   // Engineering blog — a followed link from the apex domain, passing crawl
   // authority to the subdomain (not a "social", so not in socials.json).
   engineering: 'https://engineering.sailingnaturali.com',
+  // Slackwater, our offline tide & current app — followed links for backlink authority.
+  slackwater: 'https://slackwater.xyz',
+} as const
+
+// Where on this site a Slackwater link sits; lands in Plausible as utm_content.
+export type SlackwaterPlacement = 'footer' | 'itineraries'
+
+// A slackwater.xyz URL tagged with UTM params. Slackwater pages canonicalise to
+// the bare path, so the query string doesn't split the link's SEO credit.
+export function slackwaterUrl(path: string, placement: SlackwaterPlacement): string {
+  const url = new URL(path, siteConfig.slackwater)
+  url.searchParams.set('utm_source', 'sailingnaturali.com')
+  url.searchParams.set('utm_medium', 'referral')
+  url.searchParams.set('utm_campaign', 'sailingnaturali-site')
+  url.searchParams.set('utm_content', placement)
+  return url.toString()
+}
+
+// Slackwater station pages for the Victoria waterfront, our home waters.
+export const victoriaStations = {
+  victoriaTides: '/tides/ca/bc/victoria/',
+  oakBayTides: '/tides/ca/bc/oak-bay/',
+  trialIslandCurrents: '/currents/ca/bc/trial-island/',
 } as const
 
 export interface PageDef {
@@ -39,6 +62,6 @@ export const pages: PageDef[] = [
     title: 'Itineraries — Sailing Naturali',
     description:
       "The charter trips we’re planning aboard an all-electric catamaran in the Pacific Northwest — a Gulf Islands loop, a Desolation Sound expedition, a Sunshine Coast passage, and the far-north Broughtons. In development.",
-    lastmod: '2026-06-09',
+    lastmod: '2026-11-23',
   },
 ]
